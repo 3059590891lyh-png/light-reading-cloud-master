@@ -1,0 +1,17 @@
+spring:
+  # 服务逻辑名称
+  application:
+    name: light-reading-cloud-homepage
+
+  cloud:
+    nacos:
+      # 配置中心
+      config:
+        server-addr: 58.87.91.118:8848
+        file-extension: yml
+        refresh: true
+        shared-dataids: reading-cloud-homepage.yml
+
+      # 注册中心
+      discovery:
+        server-addr: 58.87.91.118:8848
