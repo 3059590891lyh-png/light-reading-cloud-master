@@ -26,6 +26,7 @@ import java.util.List;
 
 /**
  * 图书章节服务
+ *
  * @author: zealon
  * @since: 2019/9/25
  */
@@ -76,7 +77,7 @@ public class BookChapterServiceImpl implements BookChapterService {
         if (chapter == null) {
             chapter = this.bookChapterMapper.selectById(chapterId);
             if (chapter != null) {
-                this.redisService.setHashValExpire(key, field ,chapter, RedisExpire.HOUR);
+                this.redisService.setHashValExpire(key, field, chapter, RedisExpire.HOUR);
             }
         }
         return ResultUtil.success(chapter);
@@ -108,7 +109,7 @@ public class BookChapterServiceImpl implements BookChapterService {
 
         // 获取当前章信息、内容
         String content = this.getChapterContent(bookId, chapterNode.getId());
-        BookChapterVO current = new BookChapterVO(chapterNode.getId(),chapterNode.getName(),content);
+        BookChapterVO current = new BookChapterVO(chapterNode.getId(), chapterNode.getName(), content);
 
         // 上一章、下一章
         BookChapterVO pre = null;
@@ -128,11 +129,12 @@ public class BookChapterServiceImpl implements BookChapterService {
 
     /**
      * 获取前后章节节点数据链表
+     *
      * @param bookId
      * @param field
      * @return
      */
-    private BookPreviousAndNextChapterNode getChapterNodeData(final Integer bookId, final String field){
+    private BookPreviousAndNextChapterNode getChapterNodeData(final Integer bookId, final String field) {
         // 缓存获取
         String key = RedisBookKey.getBookChapterNodeKey(bookId);
         BookPreviousAndNextChapterNode chapterNode = this.redisService.getHashObject(key, field, BookPreviousAndNextChapterNode.class);
@@ -146,7 +148,7 @@ public class BookChapterServiceImpl implements BookChapterService {
             return null;
         }
 
-        HashMap<String,BookPreviousAndNextChapterNode> map = new HashMap<>();
+        HashMap<String, BookPreviousAndNextChapterNode> map = new HashMap<>();
         // 上一章节节点数据
         BookPreviousAndNextChapterNode pre = null;
         try {
@@ -166,7 +168,7 @@ public class BookChapterServiceImpl implements BookChapterService {
                     curr.setPre(new BookPreviousAndNextChapterNode(pre));
                     pre.setNext(new BookPreviousAndNextChapterNode(curr));
                     // 章节id
-                    map.put(pre.getId()+"", pre);
+                    map.put(pre.getId() + "", pre);
                 }
 
                 // 第二章设置前章节点数据
@@ -180,7 +182,7 @@ public class BookChapterServiceImpl implements BookChapterService {
                 }
 
                 // 存储节点数据
-                map.put(curr.getId()+"", curr);
+                map.put(curr.getId() + "", curr);
                 pre = curr;
             }
             // 最后一章节
@@ -194,11 +196,12 @@ public class BookChapterServiceImpl implements BookChapterService {
 
     /**
      * 获取章节内容
+     *
      * @param bookId
      * @param chapterId
      * @return
      */
-    private String getChapterContent(String bookId, Integer chapterId){
+    private String getChapterContent(String bookId, Integer chapterId) {
         String content = "";
         BookChapter chapter = this.getChapterById(bookId, chapterId).getData();
         if (chapter != null) {

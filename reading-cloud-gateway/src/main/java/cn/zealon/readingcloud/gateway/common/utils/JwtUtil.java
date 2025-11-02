@@ -40,12 +40,15 @@ public class JwtUtil {
             return ResultUtil.success(user);
         } catch (ExpiredJwtException e) {
             // 已过期令牌
+            System.out.println("Token已过期：" + e.getMessage());
             return ResultUtil.authExpired();
         } catch (SignatureException e) {
             // 伪造令牌
+            System.out.println("Token签名无效（密钥不匹配/被篡改）：" + e.getMessage());
             return ResultUtil.unAuthorized();
         } catch (Exception e) {
             // 系统错误
+            System.out.println("Token解析失败（字段错误/格式异常）：" + e.getMessage());
             return ResultUtil.unAuthorized();
         }
     }

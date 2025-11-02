@@ -20,6 +20,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.util.StringUtils;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
+
 import java.nio.charset.StandardCharsets;
 import java.util.HashSet;
 import java.util.Set;
@@ -28,6 +29,7 @@ import java.util.regex.Pattern;
 
 /**
  * 身份认证过滤器
+ *
  * @author: zealon
  * @since: 2020/4/12
  */
@@ -55,15 +57,19 @@ public class AuthFilter implements GlobalFilter, Ordered {
         String[] segments = path.split("/");
         if (!whiteList.contains(segments[1])) {
             // 认证
-            String token = exchange.getRequest().getHeaders().getFirst("token");
+            String token = exchange.getRequest().getHeaders().getFirst("Token");
+            // 在第58行后添加日志
+            System.out.println("请求路径：" + path);
+            System.out.println("获取到的Token：" + token); // 确认是否为null或空字符串
+
             Result<User> result = JwtUtil.validationToken(token);
             if (result.getCode() == HttpCodeEnum.OK.getCode()) {
                 // 认证通过
                 User user = result.getData();
                 // 追加请求头用户信息
                 Consumer<HttpHeaders> httpHeaders = httpHeader -> {
-                    httpHeader.set("userId",user.getId().toString());
-                    httpHeader.set("nickName",user.getNickName());
+                    httpHeader.set("userId", user.getId().toString());
+                    httpHeader.set("nickName", user.getNickName());
                 };
                 ServerHttpRequest serverHttpRequest = exchange.getRequest()
                         .mutate()
@@ -92,9 +98,10 @@ public class AuthFilter implements GlobalFilter, Ordered {
 
     /**
      * 请求白名单
+     *
      * @return
      */
-    private Set<String> getWhiteList(){
+    private Set<String> getWhiteList() {
         String whitelists = this.systemPropertiesConfig.getWhitelist();
         if (StringUtils.isEmpty(whitelists)) {
             return new HashSet<>();

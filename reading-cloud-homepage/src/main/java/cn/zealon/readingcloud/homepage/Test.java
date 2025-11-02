@@ -1,5 +1,9 @@
 package cn.zealon.readingcloud.homepage;
 
+import io.jsonwebtoken.SignatureAlgorithm;
+
+import javax.crypto.SecretKey;
+
 /**
  * @author: tangyl
  * @since: 2019/8/14
@@ -7,7 +11,7 @@ package cn.zealon.readingcloud.homepage;
 public class Test {
 
 
-    public static void main(String[] args){
+        public static void main(String[] args){
         String[] ids = "10009145,10043456,88043024,60013441,52156116,10053255,1000941,5145666,5551111,555111778,72100766,125626344,323221,44353533,515264,33".split(",");
         for (int i = 0; i < ids.length; i++) {
             String bookId = ids[i];
@@ -18,5 +22,6 @@ public class Test {
             System.out.println(sql);
         }
     }
+
 
 }

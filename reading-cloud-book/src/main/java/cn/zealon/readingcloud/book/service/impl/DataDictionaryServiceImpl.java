@@ -14,6 +14,7 @@ import java.util.Map;
 
 /**
  * 字典服务
+ *
  * @author: zealon
  * @since: 2020/5/16
  */
@@ -28,7 +29,7 @@ public class DataDictionaryServiceImpl implements DataDictionaryService {
 
     @Override
     public Map<String, DataDictionary> getDictionarys(String dicType, String field) {
-        String key = "dictionary:"+dicType;
+        String key = "dictionary:" + dicType;
         HashMap<String, DataDictionary> map = new HashMap<>();
         List<DataDictionary> dictionaries = this.redisService.getHashListVal(key, field, DataDictionary.class);
         if (dictionaries.size() == 0) {
@@ -37,13 +38,13 @@ public class DataDictionaryServiceImpl implements DataDictionaryService {
                 map = this.getMap(dictionaries);
                 this.redisService.setHashValsExpire(key, map, RedisExpire.DAY);
             }
-        }else{
+        } else {
             map = this.getMap(dictionaries);
         }
         return map;
     }
 
-    private HashMap<String, DataDictionary> getMap(List<DataDictionary> dictionaries){
+    private HashMap<String, DataDictionary> getMap(List<DataDictionary> dictionaries) {
         HashMap<String, DataDictionary> map = new HashMap<>();
         for (int i = 0; i < dictionaries.size(); i++) {
             DataDictionary dictionary = dictionaries.get(i);

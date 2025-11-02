@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 /**
  * 图书服务
+ *
  * @author: tangyl
  * @since: 2019/7/4
  */
@@ -46,7 +47,7 @@ public class BookServiceImpl implements BookService {
     public Result<BookVO> getBookDetails(String bookId) {
         Book book = this.getBookById(bookId).getData();
         if (book == null) {
-            return ResultUtil.notFound().buildMessage("找不到"+bookId+"这本书哦！");
+            return ResultUtil.notFound().buildMessage("找不到" + bookId + "这本书哦！");
         }
 
         BookVO vo = new BookVO();

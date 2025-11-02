@@ -6,6 +6,7 @@ import cn.zealon.readingcloud.common.result.Result;
 
 /**
  * 图书章节服务
+ *
  * @author: tangyl
  * @since: 2019/9/25
  */
@@ -13,6 +14,7 @@ public interface BookChapterService {
 
     /**
      * 获取章节目录
+     *
      * @param bookId
      * @return
      */
@@ -20,6 +22,7 @@ public interface BookChapterService {
 
     /**
      * 获取章节内容
+     *
      * @param chapterId
      * @return
      */
@@ -27,6 +30,7 @@ public interface BookChapterService {
 
     /**
      * 阅读章节
+     *
      * @param bookId
      * @param chapterId 章节ID(0获取首章节，-1获取末章节)
      * @return

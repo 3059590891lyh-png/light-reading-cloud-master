@@ -15,3 +15,6 @@ spring:
       # 注册中心
       discovery:
         server-addr: 58.87.91.118:8848
+system:
+  properties:
+    whitelist: /account/user/login,/account/user/register

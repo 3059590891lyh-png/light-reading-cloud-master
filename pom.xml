@@ -87,6 +87,12 @@
             <artifactId>druid</artifactId>
             <version>${druid.version}</version>
         </dependency>
+        <!-- 补充Apache Commons Pool2依赖，支持Redis连接池 -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-pool2</artifactId>
+            <version>2.11.1</version> <!-- 与Spring Boot 2.1.x版本兼容 -->
+        </dependency>
     </dependencies>
 
     <dependencyManagement>
